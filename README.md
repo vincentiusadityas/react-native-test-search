@@ -34,7 +34,8 @@ Loopback 4 is used for the API endpoints.
 #
 ## Overview
 
-![Demo Search](./demo.gif)
+<!-- ![Demo Search](./demo.gif) -->
+<img src="./demo.gif" alt="Demo Search" width="200"/>
 
 #
 ## Contact
