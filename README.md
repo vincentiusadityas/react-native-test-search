@@ -32,6 +32,11 @@ Loopback 4 is used for the API endpoints.
 > When developing locally, use the local IP address of your emulator (usually 10.0.0.1 or 10.0.0.2) to fetch the data.
 
 #
+## Overview
+
+![Demo Search](./demo.gif)
+
+#
 ## Contact
 
 Developed by [Vincentius Aditya Sundjaja](https://vincentiusadityas.dev)
