@@ -18,7 +18,7 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 import { CustomSearchBar } from '../components/CustomSearchBar'
-import { SearchItem } from '../components/SearchItem'
+import SearchItem from '../components/SearchItem'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { SearchBar, Text } from 'react-native-elements';
 import { SafeAreaProvider } from 'react-native-safe-area-context';

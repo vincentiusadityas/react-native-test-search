@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import type {Node} from 'react';
 import {
   SafeAreaView,
@@ -18,7 +18,7 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 import { CustomSearchBar } from '../components/CustomSearchBar'
-import { SearchItem } from '../components/SearchItem'
+import SearchItem from '../components/SearchItem'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { SearchBar, Text } from 'react-native-elements';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -61,6 +61,7 @@ export const SearchPage: () => Node = () => {
     const [isLoading, setIsLoading] = React.useState(false);
     const [searchTxt, setSearchTxt] = React.useState("");
     const [data, setData] = React.useState([]);
+    const [hits, setHits] = React.useState(0);
 
     let searchRef = null;
   
@@ -68,8 +69,10 @@ export const SearchPage: () => Node = () => {
 
     const fetchFilteredMenuData = React.useCallback(
       debounce(filter => {
+        setIsLoading(true)
+        console.log("here")
+        console.log(filter)
         if (filter !== "") {
-          setIsLoading(true)
           fetchFilteredMenuJSON(filter).then(menus => {
             setData(menus);
           })
@@ -82,13 +85,12 @@ export const SearchPage: () => Node = () => {
           setIsLoading(false);
           setData([]);
         }
-      }, 1000, { leading: true }),
+      }, 800),
       []
-    )
+    );
 
     const fetchFilteredMenuJSON = async (filter) => {
       let url = `http://10.0.2.2:3001/menus?filter={%22where%22:{%22itemName%22:{%22regexp%22:%22/${filter}.*/i%22}}}`;
-      
       const response = await fetch(url);
       const menus = await response.json();
       return menus;
@@ -99,12 +101,14 @@ export const SearchPage: () => Node = () => {
       fetchFilteredMenuData(txt);
     };
 
-    const renderItem = ({item}) => (
-      <SearchItem item={item} searchTxt={searchTxt} />
-    )
+    const renderItem = ({item}) => 
+      <SearchItem item={item} searchTxt={searchTxt} />;
+
+    const keyExtractor = useCallback( (item) => item.id, []);
 
     const handleCancelSearch = () => {
-      console.log('test')
+      setData([]);
+      setIsSearched(false);
     }
 
     return (
@@ -120,7 +124,7 @@ export const SearchPage: () => Node = () => {
                     // contentContainerStyle={styles.scrollViewContainer}
                     data={data}
                     renderItem={renderItem}
-                    keyExtractor={item => item.id}
+                    keyExtractor={keyExtractor}
                 />
               :
                 isSearched ?

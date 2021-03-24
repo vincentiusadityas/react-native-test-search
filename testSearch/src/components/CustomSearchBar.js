@@ -11,6 +11,7 @@ export const CustomSearchBar: () => Node = ({ searchTxt, onChangeText, onCancel=
   let searchRef = React.createRef();
 
   const handleBackPress = () => {
+    onCancel();
     searchRef.blur()
     searchRef.clear()
   }

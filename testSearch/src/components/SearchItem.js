@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { memo, useCallback } from 'react'
 import { StyleSheet, View, Image } from 'react-native'
 import { Text, Card } from 'react-native-elements'
 
-export const SearchItem:() => Node = ({ item, searchTxt }) => {
+const SearchItem:() => Node = ({ item, searchTxt }) => {
     //http://localhost:3000/menus?filter={%22where%22:{%22itemName%22:{%22regexp%22:%22/guz.*/i%22}}}
-    const highlightName = (name) => {
+    const highlightName = useCallback((name) => {
         const parts = name.split(new RegExp(`(${searchTxt})`, 'gi'));
         return (
             <Text style={styles.itemName}>
@@ -14,7 +14,7 @@ export const SearchItem:() => Node = ({ item, searchTxt }) => {
                 )}
             </Text>
         );
-    }
+    }, [])
 
     return (
         <>
@@ -87,3 +87,5 @@ const styles = StyleSheet.create({
         minWidth: "30%",
     }
 })
+
+export default memo(SearchItem);
